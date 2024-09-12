@@ -76,7 +76,7 @@ class Node:
                         for node in self.get_by_depth(1):
                             if type(node.data) != str:
                                 return
-                            if node.data == value:
+                            if node.data == "Superior":
                                 for child in node.children:
                                     new_queue.append(child)
                     case "type":

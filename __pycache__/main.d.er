@@ -1,0 +1,26 @@
+##[pylyzer] failed c:\users\ari\documents\programming\webdev\gent\trabajo-final\main.py 1726176775 5971
+.Node: ClassType
+.Node.depth: Never
+.Node.data: Never
+.Node.children: Never
+.Node.parent: Never
+.Node.__call__: (data: Obj, depth: Obj) -> main.Node
+.Node.add_child: |Type_722: Type, Type_722 <: main.Node, Type_723 <: Structural({.parent = ?Type_722})|(self: Type_722, child: Type_723) -> NoneType
+.Node.print_tree: (self: main.Node) -> NoneType
+.Node.level_trasversal: (self: main.Node) -> NoneType
+.Node.get_by_depth: |T <: main.Node|(self: T, depth: Obj) -> List!(T, 1)
+.Node.get_by: (self: main.Node, identifier: Obj, value: Obj) -> List!(Never, 0)
+.Node.get_by_classification: (self: main.Node, classification: Obj) -> NoneType
+.Node.get_by_type: (self: main.Node, Type: Obj) -> NoneType
+
+.Clothing: ClassType
+.Clothing.colors: Never
+.Clothing.data: Never
+.Clothing.fit: Never
+.Clothing.style: Never
+.Clothing.__call__: (model: Obj, fit: Obj, colors: Obj, style: Obj) -> main.Clothing
+
+.create_initial_tree: () -> main.Node
+
+Node
+
