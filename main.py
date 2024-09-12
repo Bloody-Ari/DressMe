@@ -101,6 +101,7 @@ class Node:
     def get_by_type(self, type):
         print("T-shirts, pullover")
 
+#add amterial or description maybe??
 class Clothing:
     def __init__(self, model, fit, colors, style):
         self.fit = fit
@@ -112,17 +113,51 @@ class Clothing:
         self.data = model
 
 
+#ok, this is when things get weird probably
+#filter_by_color(<0-1-2>, <clothes_array>, <color>)
+#the color should be a string in spanish, like "Rojo" or "Verde"
+#0 means that any color is fine
+#1 means that you will only get the ones with that color as primary
+#2 same as 1 but for secondary color
+def filter_by_color(filter_option, clothes, color):
+    filtered_clothes = []
+
+    match filter_option:
+        case 0:
+            print("Any")
+        case 1:
+            print("Filtering by primary color")
+            for clothe in clothes:
+                #get primary color of all options???
+                i=0
+                while i < len(clothe.colors):
+                    print(clothe.colors[i][0])
+                    if clothe.colors[i][0] == color:
+                        filtered_clothes.append(clothe)
+                    i += 1
+        case 2:
+            print("Filtering by secondary color")
+
+    return filtered_clothes
+
 def create_initial_tree():
     print("Creating initial tree")
     root = Node("Ropa", 0)
 
     superior = Node("Superior", 1)
 
+    #colors scheme:
+    #    option1          ,   option2
+    #[[primary, secondary], [primary]]
     buzos = Node("Buzos", 2)
     buzoA = Clothing("BuzoA", "Oversized", [["Rojo"], ["Verde"]], "Clasico")
     buzos.add_child(Node(buzoA, 3))
     buzoB = Clothing("BuzoB", "Regular Fit", [["Negro"], ["Gris"]], "Clasico")
     buzos.add_child(Node(buzoB, 3))
+    buzoC = Clothing("BuzoC", "Regular Fit", [["Negro", "Gris"], ["Marron", "Blanco"]], "Clasico")
+    buzos.add_child(Node(buzoC, 3))
+    buzoD = Clothing("BuzoD", "Regular Fit", [["Blanco", "Negro"], ["Rojo", "Negro"]], "Clasico")
+    buzos.add_child(Node(buzoD, 3))
 
     remeras = Node("Remeras", 2)
     remeraA = Clothing("Remera101", "Regular Fit", [["Blanca", "Negro"], ["Negro", "Gris"]], "Casual")
@@ -185,7 +220,15 @@ def create_initial_tree():
 
 if __name__ == "__main__":
     root = create_initial_tree()
-    print(root.get_by_depth(1))
+    buzos = root.get_by("type", "Buzos")
+    array_buzos = []
+    for buzo in buzos:
+        array_buzos.append(buzo.data)
+    print(array_buzos)
+    for buzo in array_buzos:
+        print(buzo.data)
     print("-"*20)
-    for cl in root.get_by("type", "Camisas"):
-        print(cl.data.data)
+
+    buzos_filtrados = filter_by_color(1, array_buzos, "Rojo")
+    for buzo in buzos_filtrados:
+        print(buzo.data)
