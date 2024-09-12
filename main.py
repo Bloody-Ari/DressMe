@@ -80,8 +80,10 @@ class Node:
                                 for child in node.children:
                                     new_queue.append(child)
                     case "type":
-                        if type(node.data) != str:
-                            print("")
+                        for node in self.get_by_depth(2):
+                            if node.data == value:
+                                for child in node.children:
+                                    new_queue.append(child)
                 n -= 1
 
         return new_queue
@@ -185,5 +187,5 @@ if __name__ == "__main__":
     root = create_initial_tree()
     print(root.get_by_depth(1))
     print("-"*20)
-    for cl in root.get_by("class", "Inferior"):
-        print(cl.data)
+    for cl in root.get_by("type", "Camisas"):
+        print(cl.data.data)
