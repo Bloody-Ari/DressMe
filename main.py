@@ -169,7 +169,7 @@ def create_initial_tree():
     buzos.add_child(Node(buzoE, 3))
 
     remeras = Node("Remeras", 2)
-    remeraA = Clothing("Remera101", "Regular Fit", [["Blanca", "Negro"], ["Negro", "Gris"]], "Casual")
+    remeraA = Clothing("Remera101", "Regular Fit", [["Blanco", "Negro"], ["Negro", "Gris"]], "Casual")
     remeras.add_child(Node(remeraA, 3))
 
     camisas = Node("Camisas", 2)
@@ -229,12 +229,12 @@ def create_initial_tree():
 
 if __name__ == "__main__":
     root = create_initial_tree()
-    buzos = root.get_by("type", "Buzos")
-    array_buzos = []
-    for buzo in buzos:
-        array_buzos.append(buzo.data)
+    remeras = root.get_by("type", "Remeras")
+    array_remeras = []
+    for remera in remeras:
+        array_remeras.append(remera.data)
 
-    buzos_filtrados = filter_by_color(0, array_buzos, "Verde")
-    print("Ropa filtrada:")
-    for buzo in buzos_filtrados:
-        print(buzo.data)
+    remeras_filtradas = filter_by_color(0, array_remeras, "Blanco")
+    print("Todas las remeras con blanco:")
+    for remera in remeras_filtradas:
+        print(remera.data)
