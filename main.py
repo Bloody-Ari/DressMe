@@ -126,14 +126,21 @@ def filter_by_color(filter_option, clothes, color):
             match filter_option:
                 case 0:
                     clothe_colors = clothe.colors[i][0]
+                    if clothe_colors == color:
+                        filtered_clothes.append(clothe)
+                    if len(clothe.colors[i]) > 1:
+                        clothe_colors = clothe.colors[i][1]
+                    if clothe_colors == color and clothe not in filtered_clothes:
+                        filtered_clothes.append(clothe)
                 case 1:
                     clothe_colors = clothe.colors[i][0]
                 case 2:
                     if len(clothe.colors[i]) > 1:
                         clothe_colors = clothe.colors[i][1]
 
-            if clothe_colors == color:
-                filtered_clothes.append(clothe)
+            if filter_option > 0:
+                if clothe_colors == color:
+                    filtered_clothes.append(clothe)
             i += 1
 
         if DEBUG:
@@ -227,7 +234,7 @@ if __name__ == "__main__":
     for buzo in buzos:
         array_buzos.append(buzo.data)
 
-    buzos_filtrados = filter_by_color(1, array_buzos, "Verde")
+    buzos_filtrados = filter_by_color(0, array_buzos, "Verde")
     print("Ropa filtrada:")
     for buzo in buzos_filtrados:
         print(buzo.data)
