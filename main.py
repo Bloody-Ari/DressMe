@@ -1,4 +1,5 @@
 #in TS 
+DEBUG = True
 class Node:
     def __init__(self, data, depth):
         self.data = data
@@ -109,28 +110,34 @@ class Clothing:
 def filter_by_color(filter_option, clothes, color):
     filtered_clothes = []
 
-    #get primary color of all options???
+    if DEBUG:
+        print("Filtrando por color ", filter_option, " ", color)
+        print("-=-"*12)
+
     for clothe in clothes:
         j=i=0
         clothe_colors = None
-        print(clothe.data)
-        print(clothe.colors)
+
+        if DEBUG:
+            print(clothe.data)
+            print(clothe.colors)
+
         while i < len(clothe.colors):
             match filter_option:
                 case 0:
-                    print("Filtering by both colors")
                     clothe_colors = clothe.colors[i][0]
                 case 1:
-                    print("Filtering by primary color")
                     clothe_colors = clothe.colors[i][0]
                 case 2:
-                    print("Filtering by secondary color")
-                    clothe_colors = clothe.colors[0][i]
+                    if len(clothe.colors[i]) > 1:
+                        clothe_colors = clothe.colors[i][1]
 
             if clothe_colors == color:
                 filtered_clothes.append(clothe)
             i += 1
-        print("-=-"*12)
+
+        if DEBUG:
+            print("-=-"*12)
 
     return filtered_clothes
 
@@ -147,10 +154,12 @@ def create_initial_tree():
     buzos.add_child(Node(buzoA, 3))
     buzoB = Clothing("BuzoB", "Regular Fit", [["Negro"], ["Gris"], ["Rojo"]], "Clasico")
     buzos.add_child(Node(buzoB, 3))
-    buzoC = Clothing("BuzoC", "Regular Fit", [["Negro", "Gris"], ["Marron", "Blanco"]], "Clasico")
+    buzoC = Clothing("BuzoC", "Regular Fit", [["Negro", "Verde"], ["Marron", "Blanco"]], "Clasico")
     buzos.add_child(Node(buzoC, 3))
     buzoD = Clothing("BuzoD", "Regular Fit", [["Blanco", "Negro"], ["Rojo", "Negro"]], "Clasico")
     buzos.add_child(Node(buzoD, 3))
+    buzoE = Clothing("BuzoE", "Regular Fit", [["Blanco", "Rojo"], ["Verde", "Rojo"]], "Clasico")
+    buzos.add_child(Node(buzoE, 3))
 
     remeras = Node("Remeras", 2)
     remeraA = Clothing("Remera101", "Regular Fit", [["Blanca", "Negro"], ["Negro", "Gris"]], "Casual")
@@ -218,7 +227,7 @@ if __name__ == "__main__":
     for buzo in buzos:
         array_buzos.append(buzo.data)
 
-    buzos_filtrados = filter_by_color(1, array_buzos, "Rojo")
+    buzos_filtrados = filter_by_color(1, array_buzos, "Verde")
     print("Ropa filtrada:")
     for buzo in buzos_filtrados:
         print(buzo.data)
