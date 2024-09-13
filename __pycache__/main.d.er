@@ -1,17 +1,15 @@
-##[pylyzer] failed c:\users\ari\documents\programming\webdev\gent\trabajo-final\main.py 1726180843 7295
+##[pylyzer] failed c:\users\ari\documents\programming\webdev\gent\trabajo-final\main.py 1726230182 7267
 .Node: ClassType
 .Node.depth: Never
 .Node.data: Never
 .Node.children: Never
 .Node.parent: Never
 .Node.__call__: (data: Obj, depth: Obj) -> main.Node
-.Node.add_child: |Type_33805: Type, Type_33806 <: Structural({.parent = ?Type_33805}), Type_33805 <: main.Node|(self: Type_33805, child: Type_33806) -> NoneType
+.Node.add_child: |Type_8939: Type, Type_8940 <: Structural({.parent = ?Type_8939}), Type_8939 <: main.Node|(self: Type_8939, child: Type_8940) -> NoneType
 .Node.print_tree: (self: main.Node) -> NoneType
 .Node.level_trasversal: (self: main.Node) -> NoneType
 .Node.get_by_depth: |T <: main.Node|(self: T, depth: Obj) -> List!(T, 1)
 .Node.get_by: (self: main.Node, identifier: Obj, value: Obj) -> List!(Never, 0)
-.Node.get_by_classification: (self: main.Node, classification: Obj) -> NoneType
-.Node.get_by_type: (self: main.Node, Type: Obj) -> NoneType
 
 .Clothing: ClassType
 .Clothing.colors: Never
@@ -20,10 +18,10 @@
 .Clothing.style: Never
 .Clothing.__call__: (model: Obj, fit: Obj, colors: Obj, style: Obj) -> main.Clothing
 
-.filter_by_color: (filter_option: Obj, clothes: Obj, color: Obj) -> List!(Never, 0)
+.filter_by_color: |T <: Structural({.colors = ?Type_9010; .data = ?Type_9008}), Type_9008 <: Ref(Obj), Type_9010 <: Structural({.__len__ = (self: Never) -> Nat})|(filter_option: Obj, clothes: Iterable(T), color: Obj) -> List!(T, 1)
 .create_initial_tree: () -> main.Node
 
-ode
+e
 
 : () -> main.Node
 
