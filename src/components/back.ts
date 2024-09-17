@@ -269,6 +269,8 @@ const filter_by_style = (clothes: Array<Clothing>, search_string: string)=>{
 	return filtered_clothes;
 }
 
+//falta filtro por material btw
+
 export {
 	Clothing, 
 	TreeNode, 
