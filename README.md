@@ -95,8 +95,20 @@ Esta fución es aplicable a todas las prendas, pero siempre el término de búsq
 #### extractClotheArray
     function extractClotheArray(nodes: Array<TreeNode>) -> Array<Clothing>
 Esta función toma un `TreeNode` como argumento y devuelve los objetos `Clothing` que sean hijos o hijos de sus hijos de manera indiscriminada, puede utilizarse en clases y tipos sin distinción de uso y siempre devolverá un array con la ropa.
+
 **Table of Contents**
 
-[TOCM]
-
-[TOC]
+- [DressMe](#dressme)
+  * [Backend Documentation](#backend-documentation)
+    + [Classes](#classes)
+      - [TreeNode](#treenode)
+      - [Clothing](#clothing)
+    + [Functions](#functions)
+      - [createInitialTree](#createinitialtree)
+      - [get_by](#get-by)
+      - [filterByColor](#filterbycolor)
+      - [filterByFit](#filterbyfit)
+      - [filterBySize](#filterbysize)
+      - [filterByStyle](#filterbystyle)
+      - [filterByMaterial](#filterbymaterial)
+      - [extractClotheArray](#extractclothearray)
