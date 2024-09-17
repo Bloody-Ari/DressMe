@@ -276,14 +276,17 @@ const filter_by_size = (clothes: Array<Clothing>, search_size: string)=>{
 
 const filter_by_style = (clothes: Array<Clothing>, search_string: string)=>{
 	const filtered_clothes:Array<Clothing> = [];
-
+	clothes.forEach((clothe)=>{
+		if(clothe.style === search_string)
+			filtered_clothes.push(clothe);
+	});
 	return filtered_clothes;
 }
 
 const root_tree = createInitialTree();
 const pantalones = get_by(root_tree, "class", "Superior");
 if(pantalones !== undefined)
-	console.log(filter_by_size(extract_clothe_array(pantalones), "L"));
+	console.log(filter_by_size(extract_clothe_array(pantalones), "S"));
 
 function App() {
   return (
