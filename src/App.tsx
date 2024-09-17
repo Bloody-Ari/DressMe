@@ -235,14 +235,6 @@ const filter_by_color = (filter_option: number, clothes: Array<Clothing>, color:
 	return filtered_clothes;
 }
 
-const filter_by_style = (clothes: Array<Clothing>, search_string: string) => {
-	const filtered_clothes:Array<Clothing> = [];
-	clothes.forEach((clothe)=>{
-		if(clothe.fit === search_string)
-			filtered_clothes.push(clothe);
-	});
-	return filtered_clothes;
-}
 
 //goes to everything you give it, returns all clothes.
 const extract_clothe_array = (nodes: Array<TreeNode>) =>{
@@ -262,10 +254,36 @@ const extract_clothe_array = (nodes: Array<TreeNode>) =>{
 	return clothe_array;
 }
 
+const filter_by_fit = (clothes: Array<Clothing>, search_string: string) => {
+	const filtered_clothes:Array<Clothing> = [];
+	clothes.forEach((clothe)=>{
+		if(clothe.fit === search_string)
+			filtered_clothes.push(clothe);
+	});
+	return filtered_clothes;
+}
+
+const filter_by_size = (clothes: Array<Clothing>, search_size: string)=>{
+	const filtered_clothes:Array<Clothing> = [];
+	clothes.forEach((clothe)=>{
+		clothe.sizes.forEach((size)=>{
+			if(size === search_size && !filtered_clothes.includes(clothe))
+				filtered_clothes.push(clothe);
+		});
+	});
+	return filtered_clothes;
+}
+
+const filter_by_style = (clothes: Array<Clothing>, search_string: string)=>{
+	const filtered_clothes:Array<Clothing> = [];
+
+	return filtered_clothes;
+}
+
 const root_tree = createInitialTree();
-const superior = get_by(root_tree, "class", "Superior");
-if(superior !== undefined)
-	console.log(filter_by_style(extract_clothe_array(superior), "Regular Fit"));
+const pantalones = get_by(root_tree, "class", "Superior");
+if(pantalones !== undefined)
+	console.log(filter_by_size(extract_clothe_array(pantalones), "L"));
 
 function App() {
   return (
