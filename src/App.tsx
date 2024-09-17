@@ -204,9 +204,46 @@ const createInitialTree = () =>{
 }
 
 
+const filter_by_color = (filter_option: number, clothes: Array<Clothing>, color:string) => {
+	const filtered_clothes:Array<Clothing> = [];
+
+	clothes.forEach((clothe)=>{
+		let clothe_colors;
+		for(let i=0; i<=clothe.colors.length-1; i++){
+			switch(filter_option){
+				case 0:
+					clothe_colors = clothe.colors[i][0];
+					if(clothe_colors === color)
+						filtered_clothes.push(clothe)
+					if(clothe.colors[i].length > 1)
+						clothe_colors = clothe_colors[i][1]
+					if(clothe_colors === color && !filtered_clothes.includes(clothe))
+						filtered_clothes.push(clothe);
+					break;
+				case 1:
+					clothe_colors = clothe.colors[i][0];
+					break;
+				case 2:
+					if(clothe.colors[i].length > 1)
+						clothe_colors = clothe.colors[i][1];
+			}
+			if(filter_option > 0)
+				if(clothe_colors === color)
+					filtered_clothes.push(clothe);
+		}
+	})
+	return filtered_clothes;
+}
 
 const root_tree = createInitialTree();
-console.log(get_by(root_tree, "type", "Pantalones"));
+const buzos = get_by(root_tree, "type", "Buzos")
+const array_buzos:Array<Clothing> = [];
+if(buzos !== undefined)
+	buzos.forEach((buzo)=>{
+		if(typeof buzo.data !== 'string')
+			array_buzos.push(buzo.data);
+	})
+console.log(filter_by_color(0, array_buzos, "Gris"));
 
 function App() {
   return (
