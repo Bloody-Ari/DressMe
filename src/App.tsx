@@ -235,15 +235,37 @@ const filter_by_color = (filter_option: number, clothes: Array<Clothing>, color:
 	return filtered_clothes;
 }
 
-const root_tree = createInitialTree();
-const buzos = get_by(root_tree, "type", "Buzos")
-const array_buzos:Array<Clothing> = [];
-if(buzos !== undefined)
-	buzos.forEach((buzo)=>{
-		if(typeof buzo.data !== 'string')
-			array_buzos.push(buzo.data);
+const filter_by_style = (clothes: Array<Clothing>, search_string: string) => {
+	const filtered_clothes:Array<Clothing> = [];
+	clothes.forEach((clothe)=>{
+		if(clothe.fit === search_string)
+			filtered_clothes.push(clothe);
+	});
+	return filtered_clothes;
+}
+
+//goes to everything you give it, returns all clothes.
+const extract_clothe_array = (nodes: Array<TreeNode>) =>{
+	const clothe_array:Array<Clothing> = [];
+	const queue = nodes;
+
+	queue.forEach((node)=>{
+		node.children.forEach((child)=>{
+			queue.push(child);
+		})
 	})
-console.log(filter_by_color(0, array_buzos, "Gris"));
+	queue.forEach((node)=>{
+		if(node.data instanceof Clothing)
+			clothe_array.push(node.data);
+	})
+
+	return clothe_array;
+}
+
+const root_tree = createInitialTree();
+const superior = get_by(root_tree, "class", "Superior");
+if(superior !== undefined)
+	console.log(filter_by_style(extract_clothe_array(superior), "Regular Fit"));
 
 function App() {
   return (
