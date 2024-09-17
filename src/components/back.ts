@@ -18,8 +18,8 @@ class Clothing{
 		this.material = material;
 		this.fit = fit;
 		this.colors = colors;
-	    this.style = style; //deberia sr tipo "Casual"| "Informal"| "Formal"| "Deportiva"
-	    this.sizes = sizes;
+	  this.style = style; //deberia sr tipo "Casual"| "Informal"| "Formal"| "Deportiva"
+	  this.sizes = sizes;
 	}
 	printTree(){
 		return;
@@ -271,10 +271,30 @@ const filterByStyle = (clothes: Array<Clothing>, search_string: string)=>{
 
 
 const filterByMaterial = (clothes: Array<Clothing>, search_string: string)=>{
-	console.log("WIP");
+	const filtered_clothes:Array<Clothing> = [];
+	clothes.forEach((clothe)=>{
+		if(clothe.material === search_string)
+			filtered_clothes.push(clothe);
+	});
 }
 
 //rank_clothes(selected_clothes, clothes_to_filter) -> array bidimensional [ Clothing ] [ Points ]
+const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<Clothing>) => {
+	const ranked_clothes:Array<[Clothing, number]> = [];
+	clothes_to_rank.forEach((clothe_to_rank)=>{
+		let points = 0;
+		selected_clothes.forEach((selected_clothe)=>{
+			//check primary color
+			//check secondary color
+			//if both (o sea sumo los puntos de los dos asi mas facil de checkear) sumar puntos extra
+			if(clothe_to_rank.style === selected_clothe.style)
+				points += 5;
+		});
+		ranked_clothes.push([clothe_to_rank, points]);
+	})
+	return ranked_clothes;
+	//for each clothe, check with selected for matching parameters
+}
 
 export {
 	Clothing, 
@@ -285,5 +305,7 @@ export {
 	extractClotheArray,
 	filterByFit,
 	filterBySize,
-	filterByStyle
+	filterByStyle,
+	filterByMaterial,
+	rankClothes,
 };

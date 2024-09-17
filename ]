@@ -14,9 +14,9 @@ import {
 
 const root_tree = createInitialTree();
 const pantalones = getBy(root_tree, "type", "Buzos");
-if(pantalones !== undefined){
+const ranked_clothes: [Array<Clothing>, Array<number>] = [[], []];
+if(pantalones !== undefined)
 	const clothes_array = extractClotheArray(pantalones);
-}
 
 function App() {
   return (
