@@ -122,8 +122,8 @@ function get_by(root_tree: TreeNode, identifier: string, value: string){
 						new_queue.push(node);
 				break;
 				case "type":
-					if(node.data
-					break;
+					//if(node.data === va)
+					//break;
 			}
 			n--;
 		}
