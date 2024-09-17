@@ -70,7 +70,7 @@ class TreeNode{
         }
     }
 
-    get_by_depth(depth: number){
+    getByDepth(depth: number){
         const queue:Array<TreeNode> = [this];
         const new_queue: Array<TreeNode> = [];
 
@@ -88,7 +88,7 @@ class TreeNode{
     }
 }
 
-function get_by(root_tree: TreeNode, identifier: string, value: string){
+function getBy(root_tree: TreeNode, identifier: string, value: string){
 	const queue: Array<TreeNode> = [];
 	const new_queue: Array<TreeNode> = [];
 	queue.push(root_tree);
@@ -101,7 +101,7 @@ function get_by(root_tree: TreeNode, identifier: string, value: string){
 				return;
 			switch(identifier){
 				case "class":
-					root_tree.get_by_depth(1)?.forEach((node)=>{
+					root_tree.getByDepth(1)?.forEach((node)=>{
 						if(node.data === value){
 							node.children.forEach((child)=>{
 								new_queue.push(child);
@@ -110,7 +110,7 @@ function get_by(root_tree: TreeNode, identifier: string, value: string){
 				})
 				break;
 				case "type":
-					root_tree.get_by_depth(2)?.forEach((node)=>{
+					root_tree.getByDepth(2)?.forEach((node)=>{
 					if(node.data === value)
 						node.children.forEach((child)=>{
 							new_queue.push(child);
@@ -190,7 +190,7 @@ const createInitialTree = () =>{
 }
 
 
-const filter_by_color = (filter_option: number, clothes: Array<Clothing>, color:string) => {
+const filterByColor = (filter_option: number, clothes: Array<Clothing>, color:string) => {
 	const filtered_clothes:Array<Clothing> = [];
 
 	clothes.forEach((clothe)=>{
@@ -223,7 +223,7 @@ const filter_by_color = (filter_option: number, clothes: Array<Clothing>, color:
 
 
 //goes to everything you give it, returns all clothes.
-const extract_clothe_array = (nodes: Array<TreeNode>) =>{
+const extractClotheArray = (nodes: Array<TreeNode>) =>{
 	const clothe_array:Array<Clothing> = [];
 	const queue = nodes;
 
@@ -240,7 +240,7 @@ const extract_clothe_array = (nodes: Array<TreeNode>) =>{
 	return clothe_array;
 }
 
-const filter_by_fit = (clothes: Array<Clothing>, search_string: string) => {
+const filterByFit = (clothes: Array<Clothing>, search_string: string) => {
 	const filtered_clothes:Array<Clothing> = [];
 	clothes.forEach((clothe)=>{
 		if(clothe.fit === search_string)
@@ -249,7 +249,7 @@ const filter_by_fit = (clothes: Array<Clothing>, search_string: string) => {
 	return filtered_clothes;
 }
 
-const filter_by_size = (clothes: Array<Clothing>, search_size: string)=>{
+const filterBySize = (clothes: Array<Clothing>, search_size: string)=>{
 	const filtered_clothes:Array<Clothing> = [];
 	clothes.forEach((clothe)=>{
 		clothe.sizes.forEach((size)=>{
@@ -260,7 +260,7 @@ const filter_by_size = (clothes: Array<Clothing>, search_size: string)=>{
 	return filtered_clothes;
 }
 
-const filter_by_style = (clothes: Array<Clothing>, search_string: string)=>{
+const filterByStyle = (clothes: Array<Clothing>, search_string: string)=>{
 	const filtered_clothes:Array<Clothing> = [];
 	clothes.forEach((clothe)=>{
 		if(clothe.style === search_string)
@@ -271,14 +271,17 @@ const filter_by_style = (clothes: Array<Clothing>, search_string: string)=>{
 
 //falta filtro por material btw
 
+
+//rank_clothes(selected_clothes, clothes_to_filter) -> array bidimensional [ Clothing ] [ Points ]
+
 export {
 	Clothing, 
 	TreeNode, 
 	createInitialTree,
-	get_by,
-	filter_by_color,
-	extract_clothe_array,
-	filter_by_fit,
-	filter_by_size,
-	filter_by_style
+	getBy,
+	filterByColor,
+	extractClotheArray,
+	filterByFit,
+	filterBySize,
+	filterByStyle
 };

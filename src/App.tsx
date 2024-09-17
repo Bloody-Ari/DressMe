@@ -4,18 +4,17 @@ import {
 	Clothing, 
 	TreeNode, 
 	createInitialTree,
-	get_by,
-	filter_by_color,
-	extract_clothe_array,
-	filter_by_fit,
-	filter_by_size,
-	filter_by_style
+	getBy,
+	filterByColor,
+	extractClotheArray,
+	filterByFit,
+	filterBySize,
+	filterByStyle
 } from './components/back';
 
 const root_tree = createInitialTree();
-const pantalones = get_by(root_tree, "class", "Superior");
-if(pantalones !== undefined)
-	console.log(filter_by_size(extract_clothe_array(pantalones), "S"));
+const pantalones = getBy(root_tree, "type", "Buzos");
+console.log(pantalones);
 
 function App() {
   return (
