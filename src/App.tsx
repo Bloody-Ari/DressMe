@@ -94,13 +94,10 @@ class TreeNode{
 							return;
             if(node.depth === depth)
               new_queue.push(node);
-            else
-							if(node.children instanceof TreeNode)
-              node.children.forEach((child)=>{
-                queue.push(child);
-              })
+						node.children.forEach((child)=>{
+							queue.push(child);
+						})
         }
-
         return new_queue;
     }
 }
@@ -118,10 +115,21 @@ function get_by(root_tree: TreeNode, identifier: string, value: string){
 				return;
 			switch(identifier){
 				case "class":
-					if(node.data === value)
-						new_queue.push(node);
+					root_tree.get_by_depth(1)?.forEach((node)=>{
+						if(node.data === value){
+							node.children.forEach((child)=>{
+								new_queue.push(child);
+							})
+						}
+				})
 				break;
 				case "type":
+					root_tree.get_by_depth(2)?.forEach((node)=>{
+					if(node.data === value)
+						node.children.forEach((child)=>{
+							new_queue.push(child);
+						})
+				})
 					//if(node.data === va)
 					//break;
 			}
@@ -198,7 +206,7 @@ const createInitialTree = () =>{
 
 
 const root_tree = createInitialTree();
-console.log(get_by(root_tree, "class", "Superior"));
+console.log(get_by(root_tree, "type", "Pantalones"));
 
 function App() {
   return (
