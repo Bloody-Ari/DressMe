@@ -18,7 +18,7 @@ class Clothing{
 		this.material = material;
 		this.fit = fit;
 		this.colors = colors;
-	    this.style = style;
+	    this.style = style; //deberia sr tipo "Casual"| "Informal"| "Formal"| "Deportiva"
 	    this.sizes = sizes;
 	}
 	printTree(){
@@ -269,8 +269,10 @@ const filterByStyle = (clothes: Array<Clothing>, search_string: string)=>{
 	return filtered_clothes;
 }
 
-//falta filtro por material btw
 
+const filterByMaterial = (clothes: Array<Clothing>, search_string: string)=>{
+	console.log("WIP");
+}
 
 //rank_clothes(selected_clothes, clothes_to_filter) -> array bidimensional [ Clothing ] [ Points ]
 
