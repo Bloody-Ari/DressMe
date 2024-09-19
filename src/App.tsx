@@ -9,15 +9,29 @@ import {
 	extractClotheArray,
 	filterByFit,
 	filterBySize,
-	filterByStyle
+	filterByStyle,
+	rankClothes
 } from './components/back';
 
 const root_tree = createInitialTree();
-const pantalones = getBy(root_tree, "type", "Buzos");
-if(pantalones !== undefined){
-	const clothes_array = extractClotheArray(pantalones);
+const buzos = getBy(root_tree, "type", "Buzos");
+const remeras = getBy(root_tree, "type", "Remeras");
+let buzos_array: Array<Clothing> = [];
+let remeras_array: Array<Clothing> = [];
+if(buzos !== undefined && remeras !== undefined){
+	buzos_array = extractClotheArray(buzos);
+	remeras_array = extractClotheArray(remeras);
 }
+console.log(rankClothes([buzos_array[0]], remeras_array));
 
+//there has to be a function like this to pick clothes
+//it should create a clothe object that only contains
+//the selected clothe color
+//maybe use a global constant for selected clothes?
+//useState? idk figure out what you prefer.
+const selectClothe = () => {
+	
+}
 function App() {
   return (
     <div className="App">

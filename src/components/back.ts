@@ -88,6 +88,28 @@ class TreeNode{
     }
 }
 
+class Color{
+	name: string;
+	temperature: "Frio" | "Calido" | "Neutro";
+	complementaries: string;
+	monochromatics: Array<string>;
+	analog: Array<string>;
+
+	constructor(
+		name: string,
+		temperature: "Frio" | "Calido" | "Neutro",
+		complementaries: string,
+		monochromatics: Array<string>,
+		analog: Array<string>,
+	){
+		this.name = name;
+		this.temperature = temperature;
+		this.complementaries = complementaries;
+		this.monochromatics = monochromatics;
+		this.analog = analog;
+	}
+}
+
 function getBy(root_tree: TreeNode, identifier: string, value: string){
 	const queue: Array<TreeNode> = [];
 	const new_queue: Array<TreeNode> = [];
@@ -125,6 +147,8 @@ function getBy(root_tree: TreeNode, identifier: string, value: string){
 	}
 }
 
+const color_list: Array<Color> = [];
+
 const createInitialTree = () =>{
     const root = new TreeNode("Ropa", 0);
 
@@ -132,9 +156,9 @@ const createInitialTree = () =>{
 
     const buzos_node = new TreeNode("Buzos", 2);
 
-    const buzoA = new Clothing("BuzoA", "Algodon", "Regular Fit", [["Verde"], ["Gris"]], "Informal", ["S", "M", "L"]);
+    const buzoA = new Clothing("BuzoA", "Algodon", "Regular Fit", [["Verde Obscuro"], ["Gris"]], "Informal", ["S", "M", "L"]);
     const buzoB = new Clothing("BuzoB", "Algodon", "Regular Fit", [["Negro", "Blanco"], ["Gris"]], "Formal", ["S", "M", "L"]);
-    const buzoC = new Clothing("BuzoC", "Algodon", "Regular Fit", [["Azul"], ["Verde"]], "Formal", ["S", "M", "L"]);
+    const buzoC = new Clothing("BuzoC", "Algodon", "Regular Fit", [["Azul"], ["Verde Obscuro"]], "Formal", ["S", "M", "L"]);
     const buzoD = new Clothing("BuzoD", "Algodon", "Regular Fit", [["Rojo", "Blanco"], ["Negro"]], "Informal", ["S", "M", "L"]);
     
     buzos_node.addChild(new TreeNode(buzoA, 3));
@@ -155,7 +179,7 @@ const createInitialTree = () =>{
     const camisas_node = new TreeNode("Camisas", 2);
 
     const camisa_lisa = new Clothing("Camisa Lisa", "Algodon", "Regular Fit", [["Blanco"], ["Azul"], ["Rosa"]], "Formal", ["S", "M", "L"]);
-    const camisa_cuadrille = new Clothing("Camisa Cuadrille", "Algodon", "Slim Fit", [["Blanco", "Negro"], ["Negro", "Blanco"], ["Verde", "Azul"], ["Celeste", "Blanco"]], "Formal", ["S", "M", "L"]);
+    const camisa_cuadrille = new Clothing("Camisa Cuadrille", "Algodon", "Slim Fit", [["Blanco", "Negro"], ["Negro", "Blanco"], ["Verde Obscuro", "Azul"], ["Celeste", "Blanco"]], "Formal", ["S", "M", "L"]);
 
     camisas_node.addChild(new TreeNode(camisa_cuadrille, 3));
     camisas_node.addChild(new TreeNode(camisa_lisa, 3));
@@ -186,7 +210,39 @@ const createInitialTree = () =>{
     root.addChild(inferior);
     root.addChild(enteros);
 
+		populate_colors();
     return root;
+}
+
+const populate_colors = () =>{
+	color_list.push(new Color("Azul", "Frio", "Amarillo", ["Azul Obscuro","Azul Marino", "Celeste", "Blanco", "Negro"], ["Violeta"," Verde Obscuro"]));
+	color_list.push(new Color("Amarillo", "Calido", "Azul", ["Crema","Blanco", "Negro"], ["Verde Obscuro","Naranja"]));
+	color_list.push(new Color("Naranja", "Calido", "Celeste", ["Mostaza","Blanco", "Negro"], ["Amarillo","Rojo"]));
+	color_list.push(new Color("Negro", "Neutro", "Blanco", ["Blanco","Gris"], ["Blanco","Gris"]));
+	color_list.push(new Color("Blanco", "Neutro", "Negro", ["Negro","Gris"], ["Negro","Gris"]));
+	color_list.push(new Color("Beige", "Frio", "Lila", ["Crema","Blanco, Negro"], ["Verde Obscuro","Marron"]));
+	color_list.push(new Color("Salmon", "Calido", "Celeste", ["Coral","Blanco", "Negro"], ["Rojo","Naranja"]));
+	color_list.push(new Color("Gris", "Neutro", "", ["Blanco"," Negro"], ["Blanco"," Negro"]));
+	color_list.push(new Color("Verde Obscuro", "Frio", "Violeta", ["Verde Obscuro Claro","Blanco", "Negro"], ["Azul","Amarillo"]));
+	color_list.push(new Color("Marron", "Calido", "Azul Obscuro", ["Chocolate","Blanco", "Negro"], ["Rojo","Naranja"]));
+	color_list.push(new Color("Chocolate", "Calido", "Azul Marino", ["Marron","Blanco", "Negro"], ["Marron"," Purpura"]));
+	color_list.push(new Color("Bordo", "Calido", "Azul Obscuro", ["Rojo","Blanco", "Negro"], ["Naranja","Violeta"]));
+	color_list.push(new Color("Crema", "Neutro", "Beige", ["Beige","Blanco", "Negro"], ["Verde Obscuro Claro"," Coral"]));
+	color_list.push(new Color("Mostaza", "Calido", "Azul Marino", ["Naranja","Blanco", "Negro"], ["Verde Obscuro Obscuro"," Bordo"]));
+	color_list.push(new Color("Rojo", "Calido", "Celeste", ["Bordo","Rosa", "Blanco", "Negro"], ["Naranja"," Rosa"]));
+	color_list.push(new Color("Turquesa", "Frio", "Coral", ["Blanco","Negro"], ["Celeste"," Verde Obscuro Claro"]));
+	color_list.push(new Color("Celeste", "Frio", "Magenta", ["Azul Obscuro","Azul Marino", "Blanco", "Negro"], ["Azul"," Verde Obscuro Claro"]));
+	color_list.push(new Color("Magenta", "Calido", "Celeste", ["Violeta","Fucsia", "Lila", "Purpura", "Blanco", "Negro"], ["Amarilo"," Celeste"]));
+	color_list.push(new Color("Azul Marino", "Frio", "Mostaza", ["Azul Obscuro","Celeste", "Blanco", "Negro"], ["Azul Obscuro"," Purpura"]));
+	color_list.push(new Color("Azul Obscuro", "Frio", "Marron", ["Celeste","Azul Marino", "Blanco", "Negro"], ["Azul Marino"," Purpura"]));
+	color_list.push(new Color("Lila", "Calido", "Verde Obscuro Claro", ["Violeta","Fucsia", "Lila", "Magenta", "Blanco", "Negro"], ["Rosa"," Celeste"]));
+	color_list.push(new Color("Purpura", "Calido", "Verde Obscuro Obscuro", ["Violeta","Fucsia", "Lila", "Magenta","Blanco", "Negro"], ["Violeta"," Bordo"]));
+	color_list.push(new Color("Coral", "Calido", "Turquesa", ["Salmon","Blanco", "Negro"], ["Amarillo"," Rosa"]));
+	color_list.push(new Color("Anaranjado", "Calido", "Celeste", [], ["Rojo"," Naranja"]));
+	color_list.push(new Color("Violeta", "Frio", "Verde Obscuro Obscuro", ["Fucsia","Lila", "Magenta", "Purpura", "Blanco", "Negro"], ["Lila"," Rojo"]));
+	color_list.push(new Color("Fucsia", "Calido", "Verde Obscuro Claro", ["Violeta","Lila", "Magenta", "Purpura", "Blanco", "Negro"], ["Rojo"," Azul"]));
+	color_list.push(new Color("Verde Claro", "Calido", "Fucsia", ["Verde Obscuro Obscuro","Blanco", "Negro"], ["Turquesa"," Amarillo"]));
+	color_list.push(new Color("Rosa", "Calido", "Turquesa", ["Bordo","Rojo", "Blanco", "Negro"], ["Violeta"," Rojo"]));
 }
 
 
@@ -278,22 +334,85 @@ const filterByMaterial = (clothes: Array<Clothing>, search_string: string)=>{
 	});
 }
 
+
 //rank_clothes(selected_clothes, clothes_to_filter) -> array bidimensional [ Clothing ] [ Points ]
 const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<Clothing>) => {
 	const ranked_clothes:Array<[Clothing, number]> = [];
-	clothes_to_rank.forEach((clothe_to_rank)=>{
-		let points = 0;
-		selected_clothes.forEach((selected_clothe)=>{
-			//check primary color
-			//check secondary color
-			//if both (o sea sumo los puntos de los dos asi mas facil de checkear) sumar puntos extra
-			if(clothe_to_rank.style === selected_clothe.style)
-				points += 5;
+	console.log("Selected clothes: " ,selected_clothes);
+	console.log("Ranking: ", clothes_to_rank);
+	
+	selected_clothes.forEach((selected_clothe)=>{
+
+		const selected_clothe_primary_colors:Array<Color> = [];
+		const selected_clothe_secondary_colors:Array<Color> = [];
+		//console.log(selected_clothe);
+		color_list.forEach((color)=>{
+			selected_clothe.colors.forEach((selected_clothe_color)=>{
+				if(selected_clothe_color[0] === color.name){
+					selected_clothe_primary_colors.push(color);
+				}
+				if(selected_clothe_color[1] === color.name){
+					selected_clothe_secondary_colors.push(color);
+				}
+			})
 		});
-		ranked_clothes.push([clothe_to_rank, points]);
-	})
+		//console.log(selected_clothe_primary_colors);
+		//console.log(selected_clothe_secondary_colors);
+
+		//console.log("CLOTHES TO RANK SECTION");
+
+		clothes_to_rank.forEach((clothe_to_rank)=>{
+			//console.log(clothe_to_rank);
+			let points = 0;
+			clothe_to_rank.colors.forEach((color)=>{
+				selected_clothe_primary_colors.forEach((selected_clothe_color)=>{
+					points += rankColor(selected_clothe_color, color[0], 2); //primary color
+				});
+				if(color[1] !== undefined)
+					selected_clothe_primary_colors.forEach((selected_clothe_color)=>{
+						points += rankColor(selected_clothe_color, color[1], 1); //primary color
+					});
+			})
+
+			let exists = false;
+			ranked_clothes.forEach((pair)=>{
+				if(pair[0] === clothe_to_rank)
+					exists = true;
+			});
+			if(exists){
+				ranked_clothes[ranked_clothes.findIndex((pair)=>{return pair[0] === clothe_to_rank})][1] += points;
+			} else {
+				ranked_clothes.push([clothe_to_rank, points]);
+			}
+			points = 0;
+			//if(ranked_clothes.includes([clothe_to_rank, points]))
+				//console.log("MATCH");
+		})
+	});
+
 	return ranked_clothes;
 	//for each clothe, check with selected for matching parameters
+}
+
+const rankColor = (selected_color: Color, color_to_rank: string, modifier: number): number =>{
+	let points = 0;
+
+	if(selected_color.name === color_to_rank)
+		points += 5 * modifier;
+	if(selected_color.complementaries === color_to_rank)
+		points += 10 * modifier;
+	
+	selected_color.analog.forEach((color)=>{
+		if(color === color_to_rank)
+			points += 2.5 * modifier;
+	});
+
+	selected_color.monochromatics.forEach((color)=>{
+		if(color === color_to_rank)
+			points += 5 * modifier;
+	});
+
+	return points;
 }
 
 export {
