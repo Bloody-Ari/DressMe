@@ -110,6 +110,19 @@ class Color{
 	}
 }
 
+class Style{
+	name: string;
+	matching: Array<string>;
+
+	constructor(
+		name: string,
+		matching: Array<string>,
+	){
+		this.name = name;
+		this.matching = matching;
+	}
+}
+
 function getBy(root_tree: TreeNode, identifier: string, value: string){
 	const queue: Array<TreeNode> = [];
 	const new_queue: Array<TreeNode> = [];
@@ -148,6 +161,8 @@ function getBy(root_tree: TreeNode, identifier: string, value: string){
 }
 
 const color_list: Array<Color> = [];
+const style_list: Array<Style> = [];
+const fit_list: Array<Style> = [];
 
 const createInitialTree = () =>{
     const root = new TreeNode("Ropa", 0);
@@ -210,8 +225,55 @@ const createInitialTree = () =>{
     root.addChild(inferior);
     root.addChild(enteros);
 
+		populate_fits();
+		populate_styles();
 		populate_colors();
     return root;
+}
+
+const populate_fits = () =>{
+	//mas para remeras
+	fit_list.push(new Style("Regular Fit", [""]));
+	fit_list.push(new Style("Slim Fit", []));
+	fit_list.push(new Style("Oversize", []));
+	fit_list.push(new Style("Loose Fit", []));
+	fit_list.push(new Style("Relaxed Fit", []));
+	fit_list.push(new Style("Athletic Fit", []));
+	//mas para pantalones
+	fit_list.push(new Style("Recto", []));
+	fit_list.push(new Style("Baggy", []));
+	fit_list.push(new Style("Cargo", []));
+	fit_list.push(new Style("Campana", []));
+	fit_list.push(new Style("Shorts", []));
+	fit_list.push(new Style("Mini Shorts", []));
+	fit_list.push(new Style("Shorts Deportivos", []));
+	fit_list.push(new Style("Jogging", []));
+}
+
+const populate_styles = () =>{
+	style_list.push(new Style("Casual", ["Clasico","Formal","Informal","Frances","StreetWear","Grunge", "Deportivo"]));
+	style_list.push(new Style("Clasico", ["Casual","Vintage"]));
+	style_list.push(new Style("Vintage", ["Clasico","K-Pop","Oriental"]));
+	style_list.push(new Style("Rock", ["Punk","Glam","Goth"]));
+	style_list.push(new Style("Deportivo", ["Informal","Casual"]));
+	style_list.push(new Style("Minimalista", ["Frances","Elegante Urbano"]));
+	style_list.push(new Style("Formal", ["Casual","Oriental"]));
+	style_list.push(new Style("Informal", ["Deportivo","Comfy","Casual","Elegante Urbano","Frances"]));
+	style_list.push(new Style("KuroWear", ["","","","","","","",""]));
+	style_list.push(new Style("TechWear", ["","","","","","","",""]));
+	style_list.push(new Style("Comfy", ["Informal"]));
+	style_list.push(new Style("Frances", ["Minimalista","Casual","Elegante Urbano", "Hipster"]));
+	style_list.push(new Style("Boho", ["","","","","","","",""]));
+	style_list.push(new Style("Grunge", ["Goth","K-Pop","Y2K","Casual"]));
+	style_list.push(new Style("Goth", ["Punk","Glam","Rock","K-Pop","Y2K"]));
+	style_list.push(new Style("Hipster", ["Elegante Urbano","Frances"]));
+	style_list.push(new Style("StreetWear", ["Casual","Elegante Urbano","TechWear", "KuroWear", "Punk"]));
+	style_list.push(new Style("Punk", ["Glam","Goth","Rock","StreetWear"]));
+	style_list.push(new Style("Elegante Urbano", ["StreetWear","Hipster","Frances","Informal","Minimalista","Glam"]));
+	style_list.push(new Style("Glam", ["Elegante Urbano","Grunge","Punk","Rock","Goth"]));
+	style_list.push(new Style("Oriental", ["Formal","Vintage"]));
+	style_list.push(new Style("K-Pop", ["Y2K","Casual","Goth","Grunge","StreetWear"]));
+	style_list.push(new Style("Y2K", ["TechWear","K-Pop","Rock","Vintage","Goth","Grunge"]));
 }
 
 const populate_colors = () =>{
@@ -373,6 +435,27 @@ const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<C
 						points += rankColor(selected_clothe_color, color[1], 1); //primary color
 					});
 			})
+			//styles
+			let selected_clothe_style = undefined;
+			style_list.forEach((style)=>{
+				if(style.name === selected_clothe.style)
+					selected_clothe_style = style;
+			});
+			if(selected_clothe_style !== undefined)
+				points += rankStyle(selected_clothe_style, clothe_to_rank.style);
+
+			//fit
+
+			//sizes
+			let same_size = false;
+			clothe_to_rank.sizes.forEach((size)=>{
+				selected_clothe.sizes.forEach((s)=>{
+					if(size === s)
+						same_size = true;
+				})
+			});
+			if(same_size)
+				points += 10;
 
 			let exists = false;
 			ranked_clothes.forEach((pair)=>{
@@ -384,14 +467,24 @@ const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<C
 			} else {
 				ranked_clothes.push([clothe_to_rank, points]);
 			}
-			points = 0;
-			//if(ranked_clothes.includes([clothe_to_rank, points]))
-				//console.log("MATCH");
 		})
 	});
 
 	return ranked_clothes;
 	//for each clothe, check with selected for matching parameters
+}
+
+const rankStyle = (selected_style: Style, style_to_rank:string): number =>{
+	let points = 0;
+	if(selected_style.name === style_to_rank){
+		points += 15;
+	}
+	selected_style.matching.forEach((style)=>{
+		if(style === style_to_rank){
+			points += 5;
+		}
+	});
+	return points;
 }
 
 const rankColor = (selected_color: Color, color_to_rank: string, modifier: number): number =>{
