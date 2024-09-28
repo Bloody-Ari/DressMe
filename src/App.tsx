@@ -2,27 +2,41 @@ import logo from './logo.svg';
 import './App.css';
 import {
 	Clothing, 
-	TreeNode, 
 	createInitialTree,
 	getBy,
-	filterByColor,
 	extractClotheArray,
-	filterByFit,
-	filterBySize,
-	filterByStyle,
-	rankClothes
-} from './components/back';
+	rankClothes,
+	createSuggestedOutfits
+} from './components/back'
 
 const root_tree = createInitialTree();
+
 const buzos = getBy(root_tree, "type", "Buzos");
 const remeras = getBy(root_tree, "type", "Remeras");
-let buzos_array: Array<Clothing> = [];
+const bottom_clothes = getBy(root_tree, "class", "Inferior");
+
+let buzos_array:   Array<Clothing> = [];
 let remeras_array: Array<Clothing> = [];
-if(buzos !== undefined && remeras !== undefined){
+let bottom_array:  Array<Clothing> = [];
+
+if(buzos !== undefined && remeras !== undefined && bottom_clothes !== undefined){
 	buzos_array = extractClotheArray(buzos);
 	remeras_array = extractClotheArray(remeras);
+	bottom_array = extractClotheArray(bottom_clothes);
 }
-console.log(rankClothes([buzos_array[0]], remeras_array));
+const selected_clothes: Array<Clothing> = [];
+//selected_clothes.push(buzos_array[1]);
+//selected_clothes.push(remeras_array[1]);
+buzos_array.forEach((c)=>{
+	selected_clothes.push(c);
+})
+remeras_array.forEach((c)=>{
+	selected_clothes.push(c);
+})
+console.log("Selected clothes: ", selected_clothes);
+console.log(rankClothes(bottom_array, selected_clothes));
+//console.log(createSuggestedOutfits(selected_clothes, bottom_array, 3, undefined));
+
 
 //there has to be a function like this to pick clothes
 //it should create a clothe object that only contains

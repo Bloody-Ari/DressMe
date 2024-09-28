@@ -5,6 +5,7 @@ class Clothing{
 	colors: Array<Array<string>>;
 	style: string;
 	sizes: string[];
+	type: string;
 
     constructor(
 		model: string,
@@ -13,6 +14,7 @@ class Clothing{
 		colors: Array<Array<string>>,
 		style: string,
 		sizes: string[],
+		type: string,
 	){
 		this.model = model;
 		this.material = material;
@@ -20,6 +22,7 @@ class Clothing{
 		this.colors = colors;
 	  this.style = style; //deberia sr tipo "Casual"| "Informal"| "Formal"| "Deportiva"
 	  this.sizes = sizes;
+		this.type = type;
 	}
 	printTree(){
 		return;
@@ -171,10 +174,10 @@ const createInitialTree = () =>{
 
     const buzos_node = new TreeNode("Buzos", 2);
 
-    const buzoA = new Clothing("BuzoA", "Algodon", "Regular Fit", [["Verde Obscuro"], ["Gris"]], "Informal", ["S", "M", "L"]);
-    const buzoB = new Clothing("BuzoB", "Algodon", "Regular Fit", [["Negro", "Blanco"], ["Gris"]], "Formal", ["S", "M", "L"]);
-    const buzoC = new Clothing("BuzoC", "Algodon", "Regular Fit", [["Azul"], ["Verde Obscuro"]], "Formal", ["S", "M", "L"]);
-    const buzoD = new Clothing("BuzoD", "Algodon", "Regular Fit", [["Rojo", "Blanco"], ["Negro"]], "Informal", ["S", "M", "L"]);
+    const buzoA = new Clothing("BuzoA", "Algodon", "Regular Fit", [["Verde Obscuro"], ["Gris"]], "Informal", ["S", "M", "L"], "Superior");
+    const buzoB = new Clothing("BuzoB", "Algodon", "Regular Fit", [["Negro", "Blanco"], ["Gris"]], "Formal", ["S", "M", "L"], "Superior");
+    const buzoC = new Clothing("BuzoC", "Algodon", "Regular Fit", [["Azul"], ["Verde Obscuro"]], "Formal", ["S", "M", "L"], "Superior");
+    const buzoD = new Clothing("BuzoD", "Algodon", "Regular Fit", [["Rojo", "Blanco"], ["Negro"]], "Informal", ["S", "M", "L"], "Superior");
     
     buzos_node.addChild(new TreeNode(buzoA, 3));
     buzos_node.addChild(new TreeNode(buzoB, 3));
@@ -184,8 +187,8 @@ const createInitialTree = () =>{
 
     const remeras_node = new TreeNode("Remeras", 2);
 
-    const remera_estampada = new Clothing("Remera Estampada", "Algodon", "Regular Fit", [["Blanco", "Rojo"]], "Casual", ["S", "M", "L"]);
-    const remera_lisa = new Clothing("Remera Lisa", "Algodon", "Regular Fit", [["Blanco"], ["Negro"], ["Gris"]], "Casual", ["S", "M", "L"]);
+    const remera_estampada = new Clothing("Remera Estampada", "Algodon", "Regular Fit", [["Blanco", "Rojo"]], "Casual", ["S", "M", "L"], "Superior");
+    const remera_lisa = new Clothing("Remera Lisa", "Algodon", "Regular Fit", [["Blanco"], ["Negro"], ["Gris"]], "Casual", ["S", "M", "L"], "Superior");
 
     remeras_node.addChild(new TreeNode(remera_estampada, 3));
     remeras_node.addChild(new TreeNode(remera_lisa, 3));
@@ -193,8 +196,8 @@ const createInitialTree = () =>{
 
     const camisas_node = new TreeNode("Camisas", 2);
 
-    const camisa_lisa = new Clothing("Camisa Lisa", "Algodon", "Regular Fit", [["Blanco"], ["Azul"], ["Rosa"]], "Formal", ["S", "M", "L"]);
-    const camisa_cuadrille = new Clothing("Camisa Cuadrille", "Algodon", "Slim Fit", [["Blanco", "Negro"], ["Negro", "Blanco"], ["Verde Obscuro", "Azul"], ["Celeste", "Blanco"]], "Formal", ["S", "M", "L"]);
+    const camisa_lisa = new Clothing("Camisa Lisa", "Algodon", "Regular Fit", [["Blanco"], ["Azul"], ["Rosa"]], "Formal", ["S", "M", "L"], "Superior");
+    const camisa_cuadrille = new Clothing("Camisa Cuadrille", "Algodon", "Slim Fit", [["Blanco", "Negro"], ["Negro", "Blanco"], ["Verde Obscuro", "Azul"], ["Celeste", "Blanco"]], "Formal", ["S", "M", "L"], "Superior");
 
     camisas_node.addChild(new TreeNode(camisa_cuadrille, 3));
     camisas_node.addChild(new TreeNode(camisa_lisa, 3));
@@ -209,8 +212,8 @@ const createInitialTree = () =>{
 
     const pantalones_node = new TreeNode("Pantalones", 2);
 
-    const jean_skinny = new Clothing("Jean Skinny", "Jean", "Skinny", [["Negro"], ["Azul"]], "Casual", ["42", "43", "44", "45"]);
-    const jean_chupin = new Clothing("Jean Chupin", "Jean", "Chupin", [["Negro"], ["Arena"], ["Celeste"]], "Casual", ["42", "43"]);
+    const jean_skinny = new Clothing("Jean Skinny", "Jean", "Skinny", [["Negro"], ["Azul"]], "Casual", ["42", "43", "44", "45"], "Inferior");
+    const jean_chupin = new Clothing("Jean Chupin", "Jean", "Chupin", [["Negro"], ["Arena"], ["Celeste"]], "Casual", ["42", "43"], "Inferior");
 
     pantalones_node.addChild(new TreeNode(jean_chupin, 3));
     pantalones_node.addChild(new TreeNode(jean_skinny, 3));
@@ -398,15 +401,13 @@ const filterByMaterial = (clothes: Array<Clothing>, search_string: string)=>{
 }
 
 
-//rank_clothes(selected_clothes, clothes_to_filter) -> array bidimensional [ Clothing ] [ Points ]
-const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<Clothing>) => {
+const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<Clothing>):Array<[Clothing, number]> => {
 	const ranked_clothes:Array<[Clothing, number]> = [];
 	
 	selected_clothes.forEach((selected_clothe)=>{
 
 		const selected_clothe_primary_colors:Array<Color> = [];
 		const selected_clothe_secondary_colors:Array<Color> = [];
-		//console.log(selected_clothe);
 		color_list.forEach((color)=>{
 			selected_clothe.colors.forEach((selected_clothe_color)=>{
 				if(selected_clothe_color[0] === color.name){
@@ -417,13 +418,8 @@ const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<C
 				}
 			})
 		});
-		//console.log(selected_clothe_primary_colors);
-		//console.log(selected_clothe_secondary_colors);
-
-		//console.log("CLOTHES TO RANK SECTION");
 
 		clothes_to_rank.forEach((clothe_to_rank)=>{
-			//console.log(clothe_to_rank);
 			let points = 0;
 			clothe_to_rank.colors.forEach((color)=>{
 				selected_clothe_primary_colors.forEach((selected_clothe_color)=>{
@@ -470,13 +466,19 @@ const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<C
 		})
 	});
 
+	//should return like, 0 the best, 10 the worst
+
+	ranked_clothes.sort((a, b)=>{
+		return a[1] - b[1];
+	});
+	ranked_clothes.reverse();
+
 	return ranked_clothes;
 	//for each clothe, check with selected for matching parameters
 }
 
 const rankFit = (selected_fit: string, fit_to_rank: string): number =>{
 	let points = 0;
-	console.log("Ranking fits:\n", selected_fit, fit_to_rank);	
 
 	if(selected_fit === fit_to_rank)
 		points += 10;
@@ -527,8 +529,30 @@ const rankColor = (selected_color: Color, color_to_rank: string, modifier: numbe
 	return points;
 }
 
-const createSuggestedOutfits = () => {
+//you can use:
+//createSuggestedOutfits(userSelection, filteredClothes, 5, undefined);
+//createSuggestedOutfits(userSelection, [], 5, treeRoot);
+const createSuggestedOutfits = (selected_clothes: Array<Clothing>, clothes_to_use: Array<Clothing>, how_many: number, ignore_filter: TreeNode | undefined): Array<Array<Clothing>> => {
 	console.log("Creating outfits");
+	const outfits: Array<Array<Clothing>> = [];
+
+	if(ignore_filter !== undefined)
+		clothes_to_use = extractClotheArray(ignore_filter.children);
+
+	const ranked_clothes = rankClothes(selected_clothes, clothes_to_use);
+	console.log(ranked_clothes);
+	
+	//get most ranked clothe and force to make complete outift??
+	//can repeat one clothe
+	//used_clothes = 
+	let has_upper = false;
+	let has_bottom = false;
+	for(let i=0; i<=how_many; i++){
+		ranked_clothes.forEach((clothe)=>{
+
+		});
+	}
+	return outfits;
 }
 
 export {
@@ -543,4 +567,5 @@ export {
 	filterByStyle,
 	filterByMaterial,
 	rankClothes,
+	createSuggestedOutfits
 };
