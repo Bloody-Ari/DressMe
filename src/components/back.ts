@@ -233,21 +233,22 @@ const createInitialTree = () =>{
 
 const populate_fits = () =>{
 	//mas para remeras
-	fit_list.push(new Style("Regular Fit", [""]));
+	fit_list.push(new Style("Regular Fit", ["Recto", "Shorts", "Jogging"]));
 	fit_list.push(new Style("Slim Fit", []));
-	fit_list.push(new Style("Oversize", []));
-	fit_list.push(new Style("Loose Fit", []));
-	fit_list.push(new Style("Relaxed Fit", []));
+	fit_list.push(new Style("Oversize", ["Baggy"]));
+	fit_list.push(new Style("Loose Fit", ["Baggy"]));
+	fit_list.push(new Style("Relaxed Fit", ["Baggy"]));
 	fit_list.push(new Style("Athletic Fit", []));
 	//mas para pantalones
-	fit_list.push(new Style("Recto", []));
-	fit_list.push(new Style("Baggy", []));
+	fit_list.push(new Style("Recto", ["Regular Fit"]));
+	fit_list.push(new Style("Baggy", ["Oversize", "Relaxed Fit", "Loose Fit"]));
 	fit_list.push(new Style("Cargo", []));
 	fit_list.push(new Style("Campana", []));
 	fit_list.push(new Style("Shorts", []));
+	fit_list.push(new Style("Bermuda", []));
 	fit_list.push(new Style("Mini Shorts", []));
 	fit_list.push(new Style("Shorts Deportivos", []));
-	fit_list.push(new Style("Jogging", []));
+	fit_list.push(new Style("Jogging", ["Regular Fit"]));
 }
 
 const populate_styles = () =>{
@@ -259,11 +260,11 @@ const populate_styles = () =>{
 	style_list.push(new Style("Minimalista", ["Frances","Elegante Urbano"]));
 	style_list.push(new Style("Formal", ["Casual","Oriental"]));
 	style_list.push(new Style("Informal", ["Deportivo","Comfy","Casual","Elegante Urbano","Frances"]));
-	style_list.push(new Style("KuroWear", ["","","","","","","",""]));
-	style_list.push(new Style("TechWear", ["","","","","","","",""]));
+	style_list.push(new Style("KuroWear", ["TechWear","Goth","Punk","Grunge"]));
+	style_list.push(new Style("TechWear", ["KuroWear","StreetWear","Goth","Y2K", "Goth", "Punk"]));
 	style_list.push(new Style("Comfy", ["Informal"]));
 	style_list.push(new Style("Frances", ["Minimalista","Casual","Elegante Urbano", "Hipster"]));
-	style_list.push(new Style("Boho", ["","","","","","","",""]));
+	style_list.push(new Style("Boho", ["Comfy","Casual"]));
 	style_list.push(new Style("Grunge", ["Goth","K-Pop","Y2K","Casual"]));
 	style_list.push(new Style("Goth", ["Punk","Glam","Rock","K-Pop","Y2K"]));
 	style_list.push(new Style("Hipster", ["Elegante Urbano","Frances"]));
@@ -400,8 +401,6 @@ const filterByMaterial = (clothes: Array<Clothing>, search_string: string)=>{
 //rank_clothes(selected_clothes, clothes_to_filter) -> array bidimensional [ Clothing ] [ Points ]
 const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<Clothing>) => {
 	const ranked_clothes:Array<[Clothing, number]> = [];
-	console.log("Selected clothes: " ,selected_clothes);
-	console.log("Ranking: ", clothes_to_rank);
 	
 	selected_clothes.forEach((selected_clothe)=>{
 
@@ -445,6 +444,7 @@ const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<C
 				points += rankStyle(selected_clothe_style, clothe_to_rank.style);
 
 			//fit
+			points += rankFit(selected_clothe.fit, clothe_to_rank.fit);
 
 			//sizes
 			let same_size = false;
@@ -472,6 +472,25 @@ const rankClothes = (selected_clothes: Array<Clothing>, clothes_to_rank: Array<C
 
 	return ranked_clothes;
 	//for each clothe, check with selected for matching parameters
+}
+
+const rankFit = (selected_fit: string, fit_to_rank: string): number =>{
+	let points = 0;
+	console.log("Ranking fits:\n", selected_fit, fit_to_rank);	
+
+	if(selected_fit === fit_to_rank)
+		points += 10;
+
+	let s_fit = new Style("",[]);
+	fit_list.forEach((fit)=>{
+		if(selected_fit === fit.name)
+			s_fit = fit;
+	});
+	s_fit.matching.forEach((fit)=>{
+		if(fit === fit_to_rank)
+			points += 15;
+	});
+	return points;
 }
 
 const rankStyle = (selected_style: Style, style_to_rank:string): number =>{
@@ -506,6 +525,10 @@ const rankColor = (selected_color: Color, color_to_rank: string, modifier: numbe
 	});
 
 	return points;
+}
+
+const createSuggestedOutfits = () => {
+	console.log("Creating outfits");
 }
 
 export {
